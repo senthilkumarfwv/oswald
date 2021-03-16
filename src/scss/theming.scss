@@ -1,0 +1,149 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$mat-teal: (
+    50 : #e8f7f9,
+    100 : #c6eaf0,
+    200 : #a0dde7,
+    300 : #7acfdd,
+    400 : #5ec4d5,
+    500 : #41bace,
+    600 : #3bb3c9,
+    700 : #32abc2,
+    800 : #2aa3bc,
+    900 : #1c94b0,
+    A100 : #e7faff,
+    A200 : #b4f0ff,
+    A400 : #81e5ff,
+    A700 : #68e0ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$mat-dark: (
+    50 : #e3e3e3,
+    100 : #b8b8b8,
+    200 : #898989,
+    300 : #595959,
+    400 : #363636,
+    500 : #121212,
+    600 : #101010,
+    700 : #0d0d0d,
+    800 : #0a0a0a,
+    900 : #050505,
+    A100 : #ff4e4e,
+    A200 : #ff1b1b,
+    A400 : #e70000,
+    A700 : #ce0000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$mat-red: (
+  50: #ffebee,
+  100: #ffcdd2,
+  200: #ef9a9a,
+  300: #e57373,
+  400: #ef5350,
+  500: #f44336,
+  600: #e53935,
+  700: #d32f2f,
+  800: #c62828,
+  900: #b71c1c,
+  A100: #ff8a80,
+  A200: #ff5252,
+  A400: #ff1744,
+  A700: #d50000,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: white,
+    600: white,
+    700: white,
+    800: $white-87-opacity,
+    900: $white-87-opacity,
+    A100: $black-87-opacity,
+    A200: white,
+    A400: white,
+    A700: white,
+  )
+);
+
+$app-primary: mat-palette($mat-teal);
+$app-accent:  mat-palette($mat-dark, A200, A100, A400);
+$app-warn: mat-palette($mat-red);
+
+// The warn palette is optional (defaults to red).
+$app-warn:    mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as `color` or `typography`.
+$app-theme: mat-light-theme((
+  color: (
+    primary: $app-primary,
+    accent: $app-accent,
+    warn: $app-warn,
+  )
+));
+
+
+//custom foreground theme
+$foreground: (
+  icon: app-color('cool-gray', 500),
+  icons: app-color('cool-gray', 500),
+  text: app-color('app-theme', 'default'),
+);
+
+$app-theme: map_merge($app-theme, (foreground: $foreground));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($app-theme);
+
+// Generate Condo color classes for the theme
+@include app-color-classes( ( primary: map-get($app-theme, primary), accent: map-get($app-theme, accent), warn: map-get($app-theme, warn)));
+
+.mat-icon {
+  color: map-get($foreground, icon);
+}

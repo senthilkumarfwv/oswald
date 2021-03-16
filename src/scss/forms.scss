@@ -1,0 +1,33 @@
+@import "variables";
+@import "mixins";
+
+
+input , select {
+  border: 1px solid app-color('app-theme', 'divider');
+  background-color: app-color('app-theme', 'light');
+  color: app-color('app-theme', 'default');
+  padding: 4px 16px !important;;
+}
+
+.form-control {
+  @include border-radius(5px);
+  height: 38px !important;
+  box-sizing: border-box;
+  @include ft-calc($font-small);
+  &:focus {
+    color: app-color('app-theme', 'default');
+    background-color: app-color('app-theme', 'light');
+    @include box-shadow(none);
+    border: 1px solid app-color('app-theme', 'divider') !important;
+  }
+  &.error {
+    border: 1px solid app-color('app-theme', 'warn') !important;
+  }
+}
+
+input {
+  @include placeholder {
+    color: app-color('app-theme', 'hint');
+    @include ft-calc($font-small);
+  }
+}

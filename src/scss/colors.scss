@@ -1,0 +1,253 @@
+@import "variables";
+@import "mixins";
+
+@function app-color($color, $hue: 500, $opacity: 1) {
+
+  // Get the color palette
+  $palette: map-get($app-colors, $color);
+
+  // Make sure the palette is available
+  @if ($palette == null) {
+      @error "Color '#{$color}' is not available!";
+  }
+
+  // Get the color
+  $color: map-get($palette, $hue);
+
+  // Make sure the hue is available
+  @if ($color == null) {
+      @error "Hue '#{$hue}' is not available!";
+  }
+
+  // Apply the opacity if possible
+  @if (type-of($color) == color) {
+      $color: rgba($color, $opacity);
+  }
+
+  // Return the color
+  @return $color;
+}
+
+@mixin _generate-color-classes($color-name, $color, $contrast-color, $hue-value) {
+
+  // Text color
+  .text-#{$color-name}#{$hue-value} {
+      color: $color !important;
+  }
+
+  // Background color
+  .bg-#{$color-name}#{$hue-value} {
+      background: $color !important;
+  }
+
+  // Background and text color
+  .#{$color-name}#{$hue-value} {
+      background: $color !important;
+      color: $contrast-color !important;
+
+      svg {
+          fill: $contrast-color !important;
+      }
+
+      // Icon
+      .mat-icon {
+          color: $contrast-color !important;
+      }
+
+      // Text
+      &.text-secondary,
+      .text-secondary {
+          color: rgba($contrast-color, 0.6) !important;
+      }
+
+      &.text-hint,
+      .text-hint {
+          color: rgba($contrast-color, 0.38) !important;
+      }
+
+      &.text-disabled,
+      .text-disabled {
+          color: rgba($contrast-color, 0.38) !important;
+      }
+
+      &.divider,
+      .divider {
+          color: rgba($contrast-color, 0.12) !important;
+      }
+  }
+
+  // Border color
+  .border-#{$color-name}#{$hue-value} {
+      border-color: $color !important;
+  }
+
+  .hover\:border-#{$color-name}#{$hue-value}:hover {
+      border-color: $color !important;
+  }
+
+  .focus\:border-#{$color-name}#{$hue-value}:focus {
+      border-color: $color !important;
+  }
+
+  .active\:border-#{$color-name}#{$hue-value}:active {
+      border-color: $color !important;
+  }
+
+}
+
+@mixin app-color-classes($palettes) {
+
+  // Go through each palette
+  @each $palette-name, $palette in $palettes {
+
+      // Get each hue value
+      @each $hue in (100, 200, 300, 400, 500, 600, 700, 800, 900) {
+
+          // Get color and contrast
+          $color: map-get($palette, $hue);
+          $contrast: map-get($palette, '#{$hue}-contrast');
+
+          //@debug $color;
+
+
+          // If both color and its contrasting color exist, generate the color classes...
+          @if ($color != null and $contrast != null) {
+
+              // Generate color classes
+              @include _generate-color-classes($palette-name, $color, $contrast, '-#{$hue}');
+
+              // If the hue equals to 500, generate color classes one more time,
+              // but without the hue value suffix
+              @if ($hue == 500) {
+
+                  // Generate color classes
+                  @include _generate-color-classes($palette-name, $color, $contrast, '');
+              }
+          }
+
+      }
+  }
+}
+
+//styles
+
+a {
+  color: app-color('app-theme', 'primary');
+  &:hover {
+    color: app-color('app-theme', 'primary');
+    text-decoration: none;
+  }
+  &.disabled, &:disabled {
+    pointer-events: none;
+  }
+}
+
+h1, h2, h3, h4, h5 {
+  color: app-color('app-theme', 'default') !important;
+}
+
+.text-default {
+  color: app-color('app-theme', 'default') !important;
+}
+
+.text-secondary {
+  color: app-color('app-theme', 'secondary') !important;
+}
+
+.text-primary {
+  color: app-color('app-theme', 'primary') !important;
+}
+
+.text-accent {
+  color: app-color('app-theme', 'accent') !important;
+}
+
+.text-warn {
+  color: app-color('app-theme', 'warn') !important;
+}
+
+.text-hint {
+  color: app-color('app-theme', 'hint') !important;
+}
+
+.text-disabled {
+  color: app-color('app-theme', 'disabled') !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.text-green {
+  color: app-color('green', 700);
+}
+
+.text-red {
+  color: app-color('red', 700);
+}
+
+.text-orange {
+  color: app-color('orange', 700);
+}
+
+.shadow {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+  &.big {
+    box-shadow: 0 10px 20px rgba(app-color('cool-gray', 500), 0.1), 0 6px 6px rgba(app-color('cool-gray', 500), 0.06) !important;
+    &.teal {
+      box-shadow: 0 10px 20px rgba(app-color('cool-gray', 500), 0.1), 0 6px 26px rgba(app-color('teal', 600), 0.5) !important;
+    }
+  }
+}
+
+.bg-card {
+  background-color: white;
+}
+
+.rounded {
+  @include border-radius(12px);
+  overflow: hidden;
+}
+
+// Background colors
+.bg-default {
+  background-color: app-color('app-theme', 'light') !important;
+}
+
+.bg-primary {
+  background-color: app-color('app-theme', 'primary') !important;
+}
+
+.bg-warn {
+  background-color: app-color('app-theme', 'warn') !important;
+}
+
+//font size
+.text-xs {
+  @include ft-calc($font-tiny)
+}
+
+.text-sm {
+  @include ft-calc($font-small)
+}
+
+.text-smr {
+  @include ft-calc($font-smaller)
+}
+
+.text-md {
+  @include ft-calc($font-normal)
+}
+
+.text-base {
+  @include ft-calc($font-base)
+}
+
+//icon sizes
+.icon-sm {
+  @include app-icon-size(14);
+}
+
+.icon-md {
+  @include app-icon-size(18);
+}
