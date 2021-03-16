@@ -1,0 +1,10 @@
+<div class="notify-wrapper cur-pointer">
+  <div class="active"></div>
+  <mat-icon class="text-white" svgIcon="notifications" (click)="openPanel()" #notificationOrigin></mat-icon>
+</div>
+
+<ng-template #notificationPanel>
+  <div class="notification-panel bg-card">
+    <p>some notifications</p>
+  </div>
+</ng-template>

@@ -1,0 +1,13 @@
+<section class="wrapper">
+  <div class="color-bar" [ngClass]="[ isMenuExpanded ? 'mini' : '', isHeaderMoved ? 'move' : '', isHeaderAwake ? 'awake' : '' ]"></div>
+  <header></header>
+  <div class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

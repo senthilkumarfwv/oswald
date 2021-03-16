@@ -1,0 +1,40 @@
+<div class="header-wrapper d-flex align-items-center" [ngClass]="[ isMenuExpanded ? 'mini' : '' ,  isHeaderMoved ? 'move' : '', isHeaderAwake ? 'awake' : '']">
+  <mat-icon class="mr-4 d-lg-none menu cur-pointer" [svgIcon]="isMenuExpanded ? 'feather:x' : 'feather:menu'" (click)="openNav()"></mat-icon>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="d-flex align-items-center top">
+          <div class="logo cur-pointer" [routerLink]="'dashboard'">
+            <h2 class="text-white font-weight-bold d-flex align-items-center">
+              <img class="mr-3" src="assets/images/logo.jpg" />
+              <span>Oswald</span>
+            </h2>
+          </div>
+          <div class="ml-auto d-flex align-items-center">
+            <notify></notify>
+            <user></user>
+          </div>
+        </div>
+        <div class="bottom" [ngClass]="isHeaderAwake ? 'd-none' : ''">
+          <div class="row">
+            <div class="col-md-12 col-lg-8" [ngClass]="isMenuExpanded ? 'order-2' : 'order-none'">
+              <div class="nav-bar-wrapper d-flex">
+                <a class="nav-link" routerLink = "/dashboard" routerLinkActive="active" [routerLinkActiveOptions] = "{exact:true}">Dashboard</a>
+                <a class="nav-link" routerLink = "/tutor" routerLinkActive="active">Tutoring Schedule</a>
+                <a class="nav-link" routerLink = "/lessons" routerLinkActive="active">Lessons</a>
+                <a class="nav-link" routerLink = "/my-classes" routerLinkActive="active">My Classes</a>
+                <a class="nav-link" routerLink = "/analytics" routerLinkActive="active">Analytics</a>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-4" [ngClass]="isMenuExpanded ? 'order-1' : 'order-none'">
+              <div class="ml-auto search-bar">
+                <mat-icon class="icon-md" [svgIcon]="'search'"></mat-icon>
+                <input type="text" class="form-control" placeholder="Search for lessons, classes and students" [(ngModel)]="input" (keyup.enter)="searchData()" (ngModelChange)="isDataEmpty()">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

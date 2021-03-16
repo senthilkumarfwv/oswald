@@ -1,0 +1,17 @@
+<div class="user-wrapper d-flex align-items-center cur-pointer"[matMenuTriggerFor]="userActions">
+  <div class="rounded-circle profile overflow-hidden">
+    <img class="overflow-hidden" src="https://randomuser.me/api/portraits/women/47.jpg" alt="">
+  </div>
+  <p class="text-white ml-3 d-none d-lg-inline-block">Elizebath Kin</p>
+  <mat-icon class="arrow-icon icon-sm ml-2" svgIcon="feather:chevron-down"></mat-icon>
+</div>
+
+<mat-menu class="mat-actions-menu"
+          [xPosition]="'before'"
+          #userActions="matMenu">
+          <button mat-menu-item><span class="user-info">Profile</span></button>
+          <mat-divider class="my-2"></mat-divider>
+          <button mat-menu-item>Settings</button>
+          <mat-divider class="my-2"></mat-divider>
+          <button mat-menu-item>Logout</button>
+</mat-menu>
