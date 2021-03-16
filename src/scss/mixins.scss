@@ -17,23 +17,6 @@
   padding: 0 !important;
 }
 
-@mixin media-breakpoint($breakpoint) {
-
-  $mediaQuery: map-get($media-breakpoints, $breakpoint);
-
-  @if ($mediaQuery != null) {
-
-      @media #{$mediaQuery} {
-          @content
-      }
-  } @else {
-
-      @media #{$breakpoint} {
-          @content
-      }
-  }
-}
-
 @mixin circles($r, $bg:null, $tc:null) {
   width: $r;
   height: $r;
@@ -43,6 +26,23 @@
   background-color: $bg;
   color: $tc;
   @include border-radius($r);
+}
+
+@mixin media-breakpoint($breakpoint) {
+
+  $mediaQuery: map-get($media-breakpoints, $breakpoint);
+
+  @if ($mediaQuery != null) {
+
+      @media #{$mediaQuery} {
+          @content;
+      }
+  } @else {
+
+      @media #{$breakpoint} {
+          @content;
+      }
+  }
 }
 
 @mixin app-icon-size($size, $important: false) {
@@ -78,10 +78,10 @@
 }
 
 @mixin placeholder {
-  &::-webkit-input-placeholder {@content}
-  &:-moz-placeholder           {@content}
-  &::-moz-placeholder          {@content}
-  &:-ms-input-placeholder      {@content}
+  &::-webkit-input-placeholder {@content;}
+  &:-moz-placeholder           {@content;}
+  &::-moz-placeholder          {@content;}
+  &:-ms-input-placeholder      {@content;}
 }
 
 
